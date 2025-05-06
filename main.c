@@ -12,7 +12,7 @@
 
 int main()
 {
-  Cadastro *usuarios = malloc(sizeof(Cadastro) * 10);  
+  Cadastro *usuarios = calloc(10, sizeof(Cadastro));
   
   int opcao = 0, contador = 0;
 
@@ -20,7 +20,7 @@ int main()
     printf("Limite de usuarios atingido");
     return 0;
   }
-  
+
   do{
     telaInicial();
     
@@ -30,9 +30,13 @@ int main()
         login(usuarios);
         break;
       case 2:
-        cadastro(usuarios, contador);
-        contador++;
-        break;
+        if (contador >= 10) {
+          printf("Limite de usuários atingido\n");
+        } else {
+          cadastro(usuarios, contador);
+          contador++;
+          break;
+        }
       case 3:
         listarUsuarios(usuarios, contador);
         break;
@@ -49,6 +53,8 @@ int main()
 
     
   }while(opcao != 5);
+
+  free(usuarios);
 
   return 0;
 }
